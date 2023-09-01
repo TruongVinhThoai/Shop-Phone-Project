@@ -17,12 +17,11 @@
 //   }
 // };
 
-const getEle = (id) => document.getElementById(id);
-
 import { Service } from "../services/phoneService.js";
 import { CartItem } from "../model/cartItem.js";
 import { Product } from "../model/product.js";
 
+const getEle = (id) => document.getElementById(id);
 const service = new Service();
 let cart = [];
 
