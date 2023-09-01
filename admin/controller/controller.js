@@ -8,7 +8,7 @@ let renderProduct = (phoneList) => {
     content += ` <tr>
     <td>${item.id}</td>
     <td><strong>${item.name}</strong></td>
-    <td>$${item.price}</td>
+    <td id="tdPrice">$${item.price}</td>
     <td style="text-align: center"><img src=${item.img} alt="phone-img" width="150" height="150"></td>
     <td>${item.desc}</td>
     <td class = style="text-align: center"><button class="btn my-3 me-1" data-bs-toggle="modal"
@@ -44,7 +44,6 @@ export let getDataForm = () => {
   let img = document.getElementById("img").value;
   let desc = document.getElementById("desc").value;
   let e = document.getElementById("type");
-  let value = e.value;
   let type = e.options[e.selectedIndex].text;
   return {
     name,
@@ -68,9 +67,8 @@ export let showDataForm = (phoneData) => {
   document.getElementById("frontCam").value = frontCamera;
   document.getElementById("img").value = img;
   document.getElementById("desc").value = desc;
-  document.getElementById("type").value.options[
-    document.getElementById("type").selectedIndex
-  ].text = type;
+  let e = document.getElementById("type");
+  e.options[e.selectedIndex].text = type;
 };
 // toastify
 export let showMessage = (mess, isSuccess = true) => {
@@ -82,3 +80,5 @@ export let showMessage = (mess, isSuccess = true) => {
     },
   }).showToast();
 };
+// tìm kiếm
+//

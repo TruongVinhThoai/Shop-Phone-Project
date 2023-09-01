@@ -76,9 +76,20 @@
               id="addPhoneForm">
               <i class="fa-solid fa-circle-plus me-2"></i> Add Phone
             </button>
+            <button type="button" class="btn btn-banner" id="btnSortUp">
+              <i class="fa fa-sort-amount-up"></i> Sorting Up
+            </button>
+            <button onclick="" type="button" class="btn btn-banner" id="btnSortDown">
+              <i class="fa fa-sort-amount-down"></i> Sorting Down
+            </button>
           </div>
         </div>
-
+        <div class="input-group my-2">
+          <input type="text" class="form-control" onkeyup="btnTimKiem()" placeholder="Phone Model" id="searchName">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="btnTimNV"><i class="fa fa-search"></i></span>
+          </div>
+        </div>
         <div class=" table-responsive">
           <table class="table display" id="myTable">
             <thead class="">
