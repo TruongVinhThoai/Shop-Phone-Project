@@ -14,7 +14,7 @@ let kiemTraRong = (span, value) => {
 };
 // kiểm tra kí tự
 let kiemTraChu = (span, value) => {
-  var letters = /[^a-zA-Z\s]+/;
+  var letters = /^[a-zA-Z0-9 ]*$/;
   if (letters.test(value)) {
     document.getElementById(span).style.display = "none";
     return true;
@@ -33,6 +33,19 @@ let kiemTraSo = (span, value) => {
   } else {
     document.getElementById(span).style.display = "block";
     document.getElementById(span).innerText = "Chỉ Nhập Kí Tự Số";
+
+    return false;
+  }
+};
+// kiểm tra url
+let kiemTraURL = (span, value) => {
+  var url = /(http[s]?:\/\/)?([^\/\s]+\/)(.*)/;
+  if (url.test(value)) {
+    document.getElementById(span).style.display = "none";
+    return true;
+  } else {
+    document.getElementById(span).style.display = "block";
+    document.getElementById(span).innerText = "/(http[s]?://)?([^/s]+/)(.*)/";
 
     return false;
   }
@@ -74,7 +87,7 @@ export let kiemTraCamera = (span, value) => {
 export let kiemTraLink = (span, value) => {
   let isValid = kiemTraRong(span, value);
   if (isValid) {
-    isValid = kiemTraChu(span, value);
+    isValid = kiemTraURL(span, value);
   }
   return isValid;
 };
