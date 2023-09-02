@@ -33,12 +33,15 @@ h1 {
   letter-spacing: 2px;
   transition: 1s box-shadow;
 }
+
 .pic:hover h1 {
   color: #f3ce5e;
 }
+
 .pic:hover .homeEffect {
   box-shadow: 0 5px 35px 0px rgba(0, 0, 0, 0.1);
 }
+
 .pic:hover .homeEffect:before,
 .pic:hover .homeEffect:after {
   display: block;
@@ -51,6 +54,7 @@ h1 {
   z-index: -1;
   animation: 1s clockwise infinite;
 }
+
 .pic:hover .homeEffect:after {
   background: #f3ce5e;
   animation: 2s counterclockwise infinite;
@@ -58,7 +62,8 @@ h1 {
 
 .underline-hover-effect {
   display: inline-block;
-  padding-bottom: 0.25rem; /* defines the space between text and underline */
+  padding-bottom: 0.25rem;
+  /* defines the space between text and underline */
   position: relative;
 }
 
@@ -72,80 +77,99 @@ h1 {
   background-color: #f3ce5e;
   transition: width 0.25s ease-out;
 }
+
 .pic:hover .underline-hover-effect:before {
   width: 100%;
 }
+
 @keyframes clockwise {
   0% {
     top: -5px;
     left: 0;
   }
+
   12% {
     top: -2px;
     left: 2px;
   }
+
   25% {
     top: 0;
     left: 5px;
   }
+
   37% {
     top: 2px;
     left: 2px;
   }
+
   50% {
     top: 5px;
     left: 0;
   }
+
   62% {
     top: 2px;
     left: -2px;
   }
+
   75% {
     top: 0;
     left: -5px;
   }
+
   87% {
     top: -2px;
     left: -2px;
   }
+
   100% {
     top: -5px;
     left: 0;
   }
 }
+
 @keyframes counterclockwise {
   0% {
     top: -5px;
     right: 0;
   }
+
   12% {
     top: -2px;
     right: 2px;
   }
+
   25% {
     top: 0;
     right: 5px;
   }
+
   37% {
     top: 2px;
     right: 2px;
   }
+
   50% {
     top: 5px;
     right: 0;
   }
+
   62% {
     top: 2px;
     right: -2px;
   }
+
   75% {
     top: 0;
     right: -5px;
   }
+
   87% {
     top: -2px;
     right: -2px;
   }
+
   100% {
     top: -5px;
     right: 0;

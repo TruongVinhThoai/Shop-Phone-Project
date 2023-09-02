@@ -1,63 +1,100 @@
-const getEle = (id) => document.getElementById(id);
+/////////////////// VALID ///////////////////
+/////////////////////////////////////////////
 
-export class Validate {
-  numRegex = /^[0-9]+$/;
-
-  messageSwitch = (isFalse, idTB, message = '') => {
-    if (isFalse == false) {
-      getEle(idTB).style.display = 'block';
-      getEle(idTB).innerHTML = message;
-      return false;
-    } else if (isFalse == true) {
-      getEle(idTB).innerHTML = '&#8205'; //invisible (to keep distance between forms unchanged)
-      return true;
-    }
-  };
-
-  isNotEmpty(id, idTB) {
-    let text = getEle(id).value.trim();
-    return text == ''
-      ? this.messageSwitch(false, idTB, `(*)This field can't be empty`)
-      : this.messageSwitch(true, idTB);
+// kiểm tra rỗng
+let kiemTraRong = (span, value) => {
+  if (value.trim().length == 0) {
+    document.getElementById(span).style.display = "block";
+    document.getElementById(span).innerText = "Nội dung không được để trống";
+    return false;
+  } else {
+    document.getElementById(span).style.display = "none";
+    return true;
   }
-
-  isSelected(id, idTB) {
-    let theSelect = getEle(id);
-    return theSelect.selectedIndex == 0
-      ? this.messageSwitch(false, idTB, '(*)Please select one option')
-      : this.messageSwitch(true, idTB);
+};
+// kiểm tra kí tự
+let kiemTraChu = (span, value) => {
+  var letters = /[^a-zA-Z\s]+/;
+  if (letters.test(value)) {
+    document.getElementById(span).style.display = "none";
+    return true;
+  } else {
+    document.getElementById(span).style.display = "block";
+    document.getElementById(span).innerText = "Chỉ Nhập Kí Tự Chữ";
+    return false;
   }
+};
+// kiểm tra số
+let kiemTraSo = (span, value) => {
+  var letters = /^[0-9]+$/;
+  if (letters.test(value)) {
+    document.getElementById(span).style.display = "none";
+    return true;
+  } else {
+    document.getElementById(span).style.display = "block";
+    document.getElementById(span).innerText = "Chỉ Nhập Kí Tự Số";
 
-  isMatch(id, idTB, format) {
-    let text = getEle(id).value;
-    return !text.match(format)
-      ? this.messageSwitch(false, idTB, '(*)Price must be a number')
-      : this.messageSwitch(true, idTB);
+    return false;
   }
+};
 
-  isNotExist(phoneList, isUpdate = false) {
-    if (isUpdate) return this.messageSwitch(true, 'tbname');
-    for (let i = 0; i < phoneList.length; i++) {
-      if (phoneList[i].name == getEle('name').value) {
-        return this.messageSwitch(false, 'tbname', '(*)This phone already exist');
-      }
-    }
-    return this.messageSwitch(true, 'tbname');
+// kiểm tra name
+export let kiemTraTen = (span, value) => {
+  let isValid = kiemTraRong(span, value);
+  if (isValid) {
+    isValid = kiemTraChu(span, value);
   }
-
-  isValid(phoneList, isUpdate) {
-    let valid = true;
-    valid &= this.isNotEmpty('name', 'tbname') && this.isNotExist(phoneList, isUpdate);
-    valid &=
-      this.isNotEmpty('price', 'tbprice') &&
-      this.isMatch('price', 'tbprice', this.numRegex);
-
-    valid &= this.isNotEmpty('screen', 'tbscreen');
-    valid &= this.isNotEmpty('backCam', 'tbbackCam');
-    valid &= this.isNotEmpty('frontCam', 'tbfrontCam');
-    valid &= this.isNotEmpty('img', 'tbimg');
-    valid &= this.isNotEmpty('desc', 'tbdesc');
-    valid &= this.isSelected('type', 'tbtype');
-    return valid;
+  return isValid;
+};
+// kiểm tra price
+export let kiemTraPrice = (span, value) => {
+  let isValid = kiemTraRong(span, value);
+  if (isValid) {
+    isValid = kiemTraSo(span, value);
+  }
+  return isValid;
+};
+// kiểm tra screen
+export let kiemTraScreen = (span, value) => {
+  let isValid = kiemTraRong(span, value);
+  if (isValid) {
+    isValid = kiemTraChu(span, value);
+  }
+  return isValid;
+};
+// kiểm tra camera
+export let kiemTraCamera = (span, value) => {
+  let isValid = kiemTraRong(span, value);
+  if (isValid) {
+    isValid = kiemTraChu(span, value);
+  }
+  return isValid;
+};
+// kiểm tra link img
+export let kiemTraLink = (span, value) => {
+  let isValid = kiemTraRong(span, value);
+  if (isValid) {
+    isValid = kiemTraChu(span, value);
+  }
+  return isValid;
+};
+// kiểm tra desc
+export let kiemTraDesc = (span, value) => {
+  let isValid = kiemTraRong(span, value);
+  if (isValid) {
+    isValid = kiemTraChu(span, value);
+  }
+  return isValid;
+};
+// kiểm tra select
+export function kiemTraSelect(id, span) {
+  let theSelect = document.getElementById(id);
+  if (theSelect.selectedIndex == 0) {
+    document.getElementById(span).style.display = "block";
+    document.getElementById(span).innerText = "Vui lòng chọn brand";
+    return false;
+  } else {
+    document.getElementById(span).style.display = "none";
+    return true;
   }
 }

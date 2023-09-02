@@ -2,8 +2,8 @@ export class Service {
   getPhones = async () => {
     try {
       const res = await axios({
-        url: 'https://6204afb3c6d8b20017dc3656.mockapi.io/Products',
-        method: 'GET',
+        url: "https://64d6fb012a017531bc12e76b.mockapi.io/capstone",
+        method: "GET",
       });
       return res.data;
     } catch (err) {
@@ -13,8 +13,8 @@ export class Service {
   getPhoneById = async (id) => {
     try {
       const res = await axios({
-        url: `https://6204afb3c6d8b20017dc3656.mockapi.io/Products/${id}`,
-        method: 'GET',
+        url: `https://64d6fb012a017531bc12e76b.mockapi.io/capstone/${id}`,
+        method: "GET",
       });
 
       return res.data;
