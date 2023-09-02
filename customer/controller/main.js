@@ -1,74 +1,94 @@
-// const getEle = (id) => document.getElementById(id);
+import { CartItem } from "../model/cartItem.js";
+import { Product } from "../model/product.js";
+import { base_url, renderCart, renderList } from "./controllers.js";
 
-// import { CartItem } from "../model/cartItem.js";
-// import { Product } from "../model/product.js";
-import { GetDataPhone, GetDataPhoneById, renderCart } from "./controllers.js";
-
-// const service = new Service();
 let cart = [];
 
-GetDataPhone();
+// hàm tìm cart item trong giỏ hàng theo id sản phẩm, trả về cartitem
+const findItemById = (cart, id) => {
+  let item;
+  cart.forEach((phone) => {
+    if (phone.product.id == id) {
+      item = phone;
+      return;
+    }
+  });
+  return item;
+};
 
-// hàm tính tổng tiền trong giỏ hàng
-// const calculateSubTotal = (cart) => {
-//   let subTotal = 0;
-//   cart.forEach((ele) => {
-//     subTotal += ele.product.price * ele.quantity;
-//   });
-//   return subTotal;
-// };
+window.onload = () => {
+  console.log("😎😍🧐 ~ cart:", cart);
+  axios
+    .get(base_url)
+    .then((res) => {
+      console.log(res.data);
+      renderList(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  cart = localStorage.getItem("cart")
+    ? JSON.parse(localStorage.getItem("cart"))
+    : [];
+  renderCart(cart);
+};
 
-// // hàm tìm cart item trong giỏ hàng theo id sản phẩm, trả về cartitem
-// const findItemById = (cart, id) => {
-//   let item;
-//   cart.forEach((ele) => {
-//     if (ele.product.id == id) {
-//       item = ele;
-//       return;
-//     }
-//   });
-//   return item;
-// };
+// lọc phone theo hãng
+document.getElementById("selectList").onchange = async () => {
+  let dataPhone = {};
+  await axios
+    .get(base_url)
+    .then((res) => {
+      console.log(res.data);
+      dataPhone = res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  const selectValue = document.getElementById("selectList").value;
+  let filterData =
+    selectValue == "all"
+      ? dataPhone
+      : dataPhone.filter((ele) => ele.type == selectValue);
+  renderList(filterData);
+};
 
-// window.onload = async () => {
-//   const phoneList = await service.getPhones();
-//   renderList(phoneList);
-//   cart = localStorage.getItem("cart")
-//     ? JSON.parse(localStorage.getItem("cart"))
-//     : [];
-//   renderCart(cart);
-// };
+window.btnAddToCart = async (productId) => {
+  let dataPhone = {};
+  await axios
+    .get(`${base_url}/${productId}`)
+    .then((res) => {
+      console.log(res.data);
+      dataPhone = res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 
-//lọc phone theo hãng
-// getEle("selectList").onchange = async () => {
-//   const data = await service.getPhones();
-//   const selectValue = getEle("selectList").value;
-//   let filterData =
-//     selectValue == "all" ? data : data.filter((ele) => ele.type == selectValue);
-//   renderList(filterData);
-// };
+  let { id, name, price, screen, backCamera, frontCamera, img, desc, type } =
+    dataPhone;
+  console.log("😎😍🧐 ~ dataPhone:", dataPhone);
 
-window.btnAddToCart = (productId) => {
-  let phoneData = GetDataPhoneById(productId);
-  console.log("🚀 ~ file: main.js:53 ~ phoneData:", phoneData);
-  // let { id, name, price, screen, backCamera, frontCamera, img, desc, type } =
-  //   phoneData;
-  // let product = new Product(
-  //   id,
-  //   name,
-  //   price,
-  //   screen,
-  //   backCamera,
-  //   frontCamera,
-  //   img,
-  //   desc,
-  //   type
-  // );
-  // let newCartItem = new CartItem(product, 1);
-  // let cartItem = findItemById(cart, newCartItem.product.id);
-  // !cartItem ? cart.push(newCartItem) : cartItem.quantity++;
-  // renderCart(cart);
-  // localStorage.setItem("cart", JSON.stringify(cart));
+  let product = new Product(
+    id,
+    name,
+    price,
+    screen,
+    backCamera,
+    frontCamera,
+    img,
+    desc,
+    type
+  );
+
+  let newCartItem = new CartItem(product, 1);
+
+  let cartItem = findItemById(cart, newCartItem.product.id);
+
+  !cartItem ? cart.push(newCartItem) : cartItem.quantity++;
+  renderCart(cart);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  console.log("😎😍🧐 ~ cart:", cart);
 };
 
 // dấu cộng trong giỏ hàng

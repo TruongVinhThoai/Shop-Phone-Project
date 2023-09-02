@@ -3,11 +3,9 @@
 // import { CartItem } from "../model/cartItem";
 // import { Product } from "../model/product";
 
-let cart = [];
-
 export const base_url = "https://64d6fb012a017531bc12e76b.mockapi.io/capstone";
 
-const renderList = (phoneList) => {
+export const renderList = (phoneList) => {
   let contentHTML = "";
   phoneList.forEach((phone) => {
     contentHTML += ` <div class="col-lg-3 col-md-6">
@@ -65,34 +63,6 @@ const renderList = (phoneList) => {
   document.getElementById("phoneList").innerHTML = contentHTML;
 };
 
-// Lay thong tin dien thoai
-
-export let GetDataPhone = () => {
-  axios
-    .get(base_url)
-    .then((res) => {
-      console.log(res);
-      renderList(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
-// Lay id dien thoai
-
-export let GetDataPhoneById = async (id) => {
-  await axios
-    .get(`${base_url}/${id}`)
-    .then((res) => {
-      console.log(res.data);
-      return res.data;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-
 export let renderCart = (cart) => {
   let content = "";
   cart.forEach((ele) => {
@@ -136,8 +106,8 @@ export let renderCart = (cart) => {
   document.getElementById("cartList").innerHTML = content;
 
   let cartCount = 0;
-  cart.forEach((ele) => {
-    cartCount += ele.quantity;
+  cart.forEach((phone) => {
+    cartCount += phone.quantity;
   });
   const subTotal = calculateSubTotal(cart);
   const shipping = subTotal > 0 ? 10 : 0;
@@ -147,4 +117,13 @@ export let renderCart = (cart) => {
   document.getElementById("tax").innerHTML = "$" + Math.floor(subTotal * 0.1);
   document.getElementById("priceTotal").innerHTML =
     "$" + Math.floor(subTotal * 1.1 + shipping);
+};
+
+// hàm tính tổng tiền trong giỏ hàng
+let calculateSubTotal = (cart) => {
+  let subTotal = 0;
+  cart.forEach((phone) => {
+    subTotal += phone.product.price * phone.quantity;
+  });
+  return subTotal;
 };
