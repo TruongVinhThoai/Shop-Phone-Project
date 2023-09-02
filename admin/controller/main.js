@@ -1,7 +1,7 @@
 ////////////////////// MAIN JS //////////////////////
 ///////////////////////////////////////////////////////////
 
-import { fetchPhoneList } from "./controller.js";
+import { fetchPhoneList, renderProduct } from "./controller.js";
 import { getDataForm } from "./controller.js";
 import { showDataForm } from "./controller.js";
 import { showMessage } from "./controller.js";
@@ -40,8 +40,9 @@ document.getElementById("btnUpdate").addEventListener("click", () => {
     .then((res) => {
       console.log(res);
       fetchPhoneList();
-      $("#exampleModal").modal("hide");
       showMessage("Update Thành Công");
+      $("#exampleModal").modal("hide");
+      document.getElementById("formPhone").reset();
     })
     .catch((err) => {
       console.log(err);
@@ -82,6 +83,7 @@ document.getElementById("btnAddPhone").addEventListener("click", () => {
       fetchPhoneList();
       showMessage("Add thành công");
       $("#exampleModal").modal("hide");
+      document.getElementById("formPhone").reset();
     })
     .catch((err) => {
       console.log(err);
@@ -112,3 +114,36 @@ window.btnTimKiem = () => {
 };
 
 // sortung up
+window.btnSortUp = () => {
+  let cloneData = [];
+  axios
+    .get("https://64d6fb012a017531bc12e76b.mockapi.io/capstone")
+    .then((res) => {
+      cloneData = [...res.data];
+      cloneData.sort((next, current) => {
+        return next.price - current.price;
+      });
+      renderProduct(cloneData);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+// sorting down
+window.btnSortDown = () => {
+  let cloneData = [];
+  axios
+    .get("https://64d6fb012a017531bc12e76b.mockapi.io/capstone")
+    .then((res) => {
+      cloneData = [...res.data];
+      cloneData.sort((next, current) => {
+        return current.price - next.price;
+      });
+
+      renderProduct(cloneData);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

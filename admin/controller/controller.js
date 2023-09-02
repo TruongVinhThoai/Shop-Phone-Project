@@ -2,7 +2,7 @@
 ///////////////////////////////////////////////////////////
 
 // render
-let renderProduct = (phoneList) => {
+export let renderProduct = (phoneList) => {
   let content = "";
   phoneList.forEach((item) => {
     content += ` <tr>
@@ -36,6 +36,7 @@ export let fetchPhoneList = () => {
 
 // get data form
 export let getDataForm = () => {
+  let id = document.getElementById("idPhone").value;
   let name = document.getElementById("name").value;
   let price = document.getElementById("price").value;
   let screen = document.getElementById("screen").value;
@@ -46,6 +47,7 @@ export let getDataForm = () => {
   let e = document.getElementById("type");
   let type = e.options[e.selectedIndex].text;
   return {
+    id,
     name,
     price,
     screen,
@@ -58,8 +60,9 @@ export let getDataForm = () => {
 };
 // show data form
 export let showDataForm = (phoneData) => {
-  let { name, price, screen, backCamera, frontCamera, img, desc, type } =
+  let { id, name, price, screen, backCamera, frontCamera, img, desc, type } =
     phoneData;
+  document.getElementById("idPhone").value = id;
   document.getElementById("name").value = name;
   document.getElementById("price").value = price;
   document.getElementById("screen").value = screen;
