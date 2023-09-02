@@ -1,33 +1,9 @@
 // const getEle = (id) => document.getElementById(id);
 
-// const service = new Service();
-// let cart = [];
+// import { CartItem } from "../model/cartItem";
+// import { Product } from "../model/product";
 
-// export class Service {
-//   getPhones = async () => {
-//     try {
-//       const res = await axios({
-//         url: "https://64d6fb012a017531bc12e76b.mockapi.io/capstone",
-//         method: "GET",
-//       });
-//       return res.data;
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
-//   getPhoneById = async (id) => {
-//     try {
-//       const res = await axios({
-//         url: `https://64d6fb012a017531bc12e76b.mockapi.io/capstone/${id}`,
-//         method: "GET",
-//       });
-
-//       return res.data;
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
-// }
+let cart = [];
 
 export const base_url = "https://64d6fb012a017531bc12e76b.mockapi.io/capstone";
 
@@ -95,7 +71,7 @@ export let GetDataPhone = () => {
   axios
     .get(base_url)
     .then((res) => {
-      // console.log(res);
+      console.log(res);
       renderList(res.data);
     })
     .catch((err) => {
@@ -105,8 +81,8 @@ export let GetDataPhone = () => {
 
 // Lay id dien thoai
 
-export let GetDataPhoneById = (id) => {
-  axios
+export let GetDataPhoneById = async (id) => {
+  await axios
     .get(`${base_url}/${id}`)
     .then((res) => {
       console.log(res.data);

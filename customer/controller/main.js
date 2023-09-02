@@ -1,7 +1,7 @@
 // const getEle = (id) => document.getElementById(id);
 
-import { CartItem } from "../model/cartItem.js";
-import { Product } from "../model/product.js";
+// import { CartItem } from "../model/cartItem.js";
+// import { Product } from "../model/product.js";
 import { GetDataPhone, GetDataPhoneById, renderCart } from "./controllers.js";
 
 // const service = new Service();
@@ -50,27 +50,24 @@ GetDataPhone();
 
 window.btnAddToCart = (productId) => {
   let phoneData = GetDataPhoneById(productId);
-  console.log("😎😍🧐 ~ productId:", productId);
-
-  console.log("😎😍🧐 ~ phoneData:", phoneData);
-
-  let { id, name, price, screen, backCamera, frontCamera, img, desc, type } =
-    phoneData;
-  let product = new Product(
-    id,
-    name,
-    price,
-    screen,
-    backCamera,
-    frontCamera,
-    img,
-    desc,
-    type
-  );
-  let newCartItem = new CartItem(product, 1);
-  let cartItem = findItemById(cart, newCartItem.product.id);
-  !cartItem ? cart.push(newCartItem) : cartItem.quantity++;
-  renderCart(cart);
+  console.log("🚀 ~ file: main.js:53 ~ phoneData:", phoneData);
+  // let { id, name, price, screen, backCamera, frontCamera, img, desc, type } =
+  //   phoneData;
+  // let product = new Product(
+  //   id,
+  //   name,
+  //   price,
+  //   screen,
+  //   backCamera,
+  //   frontCamera,
+  //   img,
+  //   desc,
+  //   type
+  // );
+  // let newCartItem = new CartItem(product, 1);
+  // let cartItem = findItemById(cart, newCartItem.product.id);
+  // !cartItem ? cart.push(newCartItem) : cartItem.quantity++;
+  // renderCart(cart);
   // localStorage.setItem("cart", JSON.stringify(cart));
 };
 
