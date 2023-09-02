@@ -1,0 +1,174 @@
+// const getEle = (id) => document.getElementById(id);
+
+// const service = new Service();
+// let cart = [];
+
+// export class Service {
+//   getPhones = async () => {
+//     try {
+//       const res = await axios({
+//         url: "https://64d6fb012a017531bc12e76b.mockapi.io/capstone",
+//         method: "GET",
+//       });
+//       return res.data;
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
+//   getPhoneById = async (id) => {
+//     try {
+//       const res = await axios({
+//         url: `https://64d6fb012a017531bc12e76b.mockapi.io/capstone/${id}`,
+//         method: "GET",
+//       });
+
+//       return res.data;
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
+// }
+
+export const base_url = "https://64d6fb012a017531bc12e76b.mockapi.io/capstone";
+
+const renderList = (phoneList) => {
+  let contentHTML = "";
+  phoneList.forEach((phone) => {
+    contentHTML += ` <div class="col-lg-3 col-md-6">
+    <div class="card text-black h-100">
+    <div class="content-overlay"></div>
+      <img src=${phone.img} class="card-img" alt="Phone Image" />
+      <div class="content-details fadeIn-top">
+      <h3 class ='pb-5'>Specifications</h3>
+            <div class="d-flex justify-content-start py-1">
+          <span class='text-light'><b>Screen:</b></span>
+          <span class='text-light'>&nbsp ${phone.screen}</span>
+        </div>
+        <div class="d-flex justify-content-start py-1">
+          <span class='text-light'><b>Back Camera:</b> ${
+            phone.backCamera
+          }</span>
+        </div>
+        <div class="d-flex justify-content-start py-1">
+          <span class='text-light'><b>Front Camera:</b> ${
+            phone.frontCamera
+          }</span>
+        </div>
+
+        <p class = 'pt-5'><u>click here for more details</u></p>
+      </div>
+      <div class="card-body">
+        <div class="text-center">
+          <h5 class="card-title pt-3">${phone.name}</h5>
+          <span class="text-muted mb-2">$${phone.price}</span>
+          <span class="text-danger"><s>$${Number(phone.price) + 300}</s></span>
+        </div>
+        <div class="mt-3 brand-box text-center">
+          <span>${phone.type}</span>
+        </div>
+        <div class="d-flex justify-content-start pt-3">
+          <span><b>Description:</b> ${phone.desc}</span>
+        </div>
+        <div class="d-flex justify-content-between pt-3">
+          <div class="text-warning">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+          </div>
+          <span class = 'text-success'><b>In Stock</b></span>
+        </div>
+        <button type="button" class="btn btn-block w-50" onclick ="btnAddToCart('${
+          phone.id
+        }')">Add to cart</button>
+        </div>
+        </div>
+        </div>`;
+  });
+  document.getElementById("phoneList").innerHTML = contentHTML;
+};
+
+// Lay thong tin dien thoai
+
+export let GetDataPhone = () => {
+  axios
+    .get(base_url)
+    .then((res) => {
+      // console.log(res);
+      renderList(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+// Lay id dien thoai
+
+export let GetDataPhoneById = (id) => {
+  axios
+    .get(`${base_url}/${id}`)
+    .then((res) => {
+      console.log(res.data);
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export let renderCart = (cart) => {
+  let content = "";
+  cart.forEach((ele) => {
+    content += `<div class="product">
+  <div class="product__1">
+    <div class="product__thumbnail">
+      <img src=${ele.product.img}
+        alt="Italian Trulli">
+    </div>
+    <div class="product__details">
+      <div style="margin-bottom: 8px;"><b>${ele.product.name}</b></div>
+      <div style="font-size: 90%;">Screen: <span class="tertiary">${
+        ele.product.screen
+      }</span></div>
+      <div style="font-size: 90%;">Back Camera: <span class="tertiary">${
+        ele.product.backCamera
+      }</span></div>
+      <div style="font-size: 90%;">Front Camera: <span class="tertiary">${
+        ele.product.frontCamera
+      }</span></div>
+      <div style="margin-top: 8px;"><a href="#!" onclick ="btnRemove('${
+        ele.product.id
+      }')">Remove</a></div>
+    </div>
+  </div>
+  <div class="product__2">
+    <div class="qty">
+      <span><b>Quantity:</b> </span> &nbsp &nbsp
+      <span class="minus bg-dark" onclick ="btnMinus('${
+        ele.product.id
+      }')">-</span>
+      <span class="quantityResult mx-2">${ele.quantity}</span>
+      <span class="plus bg-dark" onclick ="btnAdd('${ele.product.id}')">+</span>
+    </div>
+    <div class="product__price"><b>$${
+      ele.quantity * ele.product.price
+    }</b></div>
+  </div>
+</div>`;
+  });
+  document.getElementById("cartList").innerHTML = content;
+
+  let cartCount = 0;
+  cart.forEach((ele) => {
+    cartCount += ele.quantity;
+  });
+  const subTotal = calculateSubTotal(cart);
+  const shipping = subTotal > 0 ? 10 : 0;
+  document.getElementById("cartCount").innerHTML = cartCount;
+  document.getElementById("shipping").innerHTML = "$" + shipping;
+  document.getElementById("subTotal").innerHTML = "$" + subTotal;
+  document.getElementById("tax").innerHTML = "$" + Math.floor(subTotal * 0.1);
+  document.getElementById("priceTotal").innerHTML =
+    "$" + Math.floor(subTotal * 1.1 + shipping);
+};
