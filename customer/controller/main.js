@@ -177,6 +177,10 @@ getEle("selectList").onchange = async () => {
 
 window.btnAddToCart = async (productId) => {
   const phoneData = await service.getPhoneById(productId);
+  console.log(
+    "🚀 ~ file: main.js:180 ~ window.btnAddToCart= ~ phoneData:",
+    phoneData
+  );
   const { id, name, price, screen, backCamera, frontCamera, img, desc, type } =
     phoneData;
   const product = new Product(
