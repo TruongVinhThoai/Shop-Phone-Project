@@ -49,7 +49,7 @@ document.getElementById("selectList").onchange = async () => {
   let filterData =
     selectValue == "all"
       ? dataPhone
-      : dataPhone.filter((ele) => ele.type == selectValue);
+      : dataPhone.filter((phone) => phone.type == selectValue);
   renderList(filterData);
 };
 
@@ -103,14 +103,14 @@ window.btnAdd = (id) => {
 window.btnMinus = (id) => {
   let cartItem = findItemById(cart, id);
   if (cartItem) cartItem.quantity--;
-  cart = cart.filter((ele) => ele.quantity != 0);
+  cart = cart.filter((phone) => phone.quantity != 0);
   renderCart(cart);
   localStorage.setItem("cart", JSON.stringify(cart));
 };
 
 // xóa sản phẩm khỏi giỏ hàng
 window.btnRemove = (id) => {
-  cart = cart.filter((ele) => ele.product.id != id);
+  cart = cart.filter((phone) => phone.product.id != id);
   renderCart(cart);
   localStorage.setItem("cart", JSON.stringify(cart));
 };

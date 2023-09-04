@@ -65,26 +65,26 @@ export const renderList = (phoneList) => {
 
 export let renderCart = (cart) => {
   let content = "";
-  cart.forEach((ele) => {
+  cart.forEach((phone) => {
     content += `<div class="product">
   <div class="product__1">
     <div class="product__thumbnail">
-      <img src=${ele.product.img}
+      <img src=${phone.product.img}
         alt="Italian Trulli">
     </div>
     <div class="product__details">
-      <div style="margin-bottom: 8px;"><b>${ele.product.name}</b></div>
+      <div style="margin-bottom: 8px;"><b>${phone.product.name}</b></div>
       <div style="font-size: 90%;">Screen: <span class="tertiary">${
-        ele.product.screen
+        phone.product.screen
       }</span></div>
       <div style="font-size: 90%;">Back Camera: <span class="tertiary">${
-        ele.product.backCamera
+        phone.product.backCamera
       }</span></div>
       <div style="font-size: 90%;">Front Camera: <span class="tertiary">${
-        ele.product.frontCamera
+        phone.product.frontCamera
       }</span></div>
       <div style="margin-top: 8px;"><a href="#!" onclick ="btnRemove('${
-        ele.product.id
+        phone.product.id
       }')">Remove</a></div>
     </div>
   </div>
@@ -92,13 +92,15 @@ export let renderCart = (cart) => {
     <div class="qty">
       <span><b>Quantity:</b> </span> &nbsp &nbsp
       <span class="minus bg-dark" onclick ="btnMinus('${
-        ele.product.id
+        phone.product.id
       }')">-</span>
-      <span class="quantityResult mx-2">${ele.quantity}</span>
-      <span class="plus bg-dark" onclick ="btnAdd('${ele.product.id}')">+</span>
+      <span class="quantityResult mx-2">${phone.quantity}</span>
+      <span class="plus bg-dark" onclick ="btnAdd('${
+        phone.product.id
+      }')">+</span>
     </div>
     <div class="product__price"><b>$${
-      ele.quantity * ele.product.price
+      phone.quantity * phone.product.price
     }</b></div>
   </div>
 </div>`;
